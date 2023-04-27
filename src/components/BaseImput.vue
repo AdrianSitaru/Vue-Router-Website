@@ -28,7 +28,7 @@ export default {
       display: flex;
       flex-direction: column;
       margin: 0 auto;
-      width: 250px;
+      width: 30%;
       height: 30px;
       border: 1px solid #a3a3a3;
       border-radius: 5px;
