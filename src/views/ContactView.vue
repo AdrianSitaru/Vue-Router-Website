@@ -2,11 +2,11 @@
   <section>
     <div class="container">
       <h1>Contact :</h1>
-      <form>
+      <form @submit.prevent="submitForm" ref="contactForm">
         <div class="form-group">
           <BaseImput
               placeholder="Name"
-              inputType="text"
+              inputType="name"
               label="Name"
           />
         </div>
@@ -28,10 +28,36 @@
 </template>
 <script>
 import BaseImput from "@/components/BaseImput.vue";
+import axios from "axios";
 
 export default {
   name: "Contact-component",
-  components: {BaseImput}
+  components: {BaseImput},
+
+  data() {
+    return {
+      name: '',
+      email: '',
+      message: '',
+    }
+  },
+    methods: {
+      submitForm() {
+        const formData = new FormData();
+        formData.append('name', this.name);
+        formData.append('email', this.email);
+        formData.append('message', this.message);
+
+        axios.post('/internship/email', formData)
+            .then(response => {
+              console.log(response);
+              this.$refs.contactForm.reset();
+            })
+            .catch(error => {
+              console.log(error);
+            });
+      }
+    }
 }
 </script>
 <style lang="scss">
