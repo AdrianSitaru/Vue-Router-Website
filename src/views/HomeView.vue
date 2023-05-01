@@ -36,6 +36,7 @@ export default {
     padding: 15px;
     text-align: center;
     margin: 0 auto;
+    width: 80%;
     h1 {
       padding-top: 20px;
       font-size: 30px;

@@ -1,64 +1,60 @@
 <template>
-  <section>
-    <div class="container">
-      <h1>Contact :</h1>
-      <form @submit.prevent="submitForm" ref="contactForm">
-        <div class="form-group">
-          <BaseImput
-              placeholder="Name"
-              inputType="name"
-              label="Name"
-          />
-        </div>
-        <div class="form-group">
-          <BaseImput
-              placeholder="Email"
-              inputType="email"
-              label="Email"
-          />
-        </div>
-        <div class="form-group">
-          <label for="message">Message:</label>
-          <textarea id="message" rows="7"> </textarea>
-        </div>
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </section>
+  <div class="container">
+    <h1>{{ title }}</h1>
+    <form @submit.prevent="handleSubmit">
+      <div class="form-group">
+        <BaseImput
+            name="name"
+            placeholder="Name"
+            label="Name:"
+            @input="handleInput"
+        />
+      </div>
+      <div class="form-group">
+        <BaseImput
+            name="email"
+            placeholder="Email"
+            label="Email:"
+            @input="handleInput"
+        />
+      </div>
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" v-model="contactForm.message" rows="7"> </textarea>
+      </div>
+      <button type="submit">Send</button>
+    </form>
+  </div>
 </template>
 <script>
 import BaseImput from "@/components/BaseImput.vue";
-import axios from "axios";
 
 export default {
-  name: "Contact-component",
+  name: "ContactComponent",
   components: {BaseImput},
-
   data() {
     return {
-      name: '',
-      email: '',
-      message: '',
+      title: 'Contact :',
+      contactForm: {
+        name: '',
+        email: '',
+        message: '',
+      },
+    };
+  },
+  methods: {
+    handleSubmit() {
+      console.log({
+        name: this.contactForm.name,
+        email: this.contactForm.email,
+        message: this.contactForm.message,
+      });
+    },
+    handleInput({name, value}) {
+      this.contactForm[name] = value;
     }
   },
-    methods: {
-      submitForm() {
-        const formData = new FormData();
-        formData.append('name', this.name);
-        formData.append('email', this.email);
-        formData.append('message', this.message);
-
-        axios.post('/internship/email', formData)
-            .then(response => {
-              console.log(response);
-              this.$refs.contactForm.reset();
-            })
-            .catch(error => {
-              console.log(error);
-            });
-      }
-    }
-}
+};
 </script>
 <style lang="scss">
 .container {
